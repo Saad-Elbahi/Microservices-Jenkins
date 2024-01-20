@@ -22,13 +22,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                // Run tests for your microservices here
-                // Add any other test steps specific to your project
-            }
-        }
-
         stage('Deploy') {
             steps {
                 sh 'docker-compose up -d'
