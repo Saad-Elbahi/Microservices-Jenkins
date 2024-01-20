@@ -1,8 +1,8 @@
 # Stage 1: Build with Maven
-FROM maven:3.9.6-openjdk-17 AS Builder
+FROM maven:3.8.4-openjdk-17 AS Builder
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY ./pom.xml .
+COPY ./src ./src
 RUN mvn clean package
 
 # Stage 2: Run the JAR file
@@ -10,5 +10,5 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 VOLUME /tmp
 ARG JAR_FILE=target/*.jar
-COPY --from=Builder /app/${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+COPY --from=Builder /app/${JAR_FILE} APIGateway-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "/app/APIGateway-0.0.1-SNAPSHOT.jar"]
