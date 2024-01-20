@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_COMPOSE_VERSION = '1.29.2'  // Adjust this version based on your Docker Compose version
         DOCKER_IMAGE_TAG = 'saad-elbahi/microservices-jenkins'
     }
 
