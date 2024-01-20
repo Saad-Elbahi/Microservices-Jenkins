@@ -7,8 +7,8 @@ pipeline {
                         script {
                             dir('EurekaServer') {
 
-                                bat 'docker build -t Saad-Elbahi/microservices-jenkins .'
-                                bat 'docker run --name eureka-server -d -p 8761:8761 Saad-Elbahi/microservices-jenkins'
+                                bat 'docker build -t saad-elbahi/microservices-jenkins .'
+                                bat 'docker run --name eureka-server -d -p 8761:8761 saad-elbahi/microservices-jenkins'
                             }
                         }
                     }
@@ -18,8 +18,8 @@ pipeline {
                         script {
                             dir('APIGateway') {
 
-                                bat 'docker build -t Saad-Elbahi/microservices-jenkins .'
-                                bat 'docker run --name api-gateway -d -p 8080:8080 Saad-Elbahi/microservices-jenkins'
+                                bat 'docker build -t saad-elbahi/microservices-jenkins .'
+                                bat 'docker run --name api-gateway -d -p 8080:8080 saad-elbahi/microservices-jenkins'
                             }
                         }
                     }
@@ -29,8 +29,8 @@ pipeline {
                         script {
                             dir('AttendanceService') {
 
-                                bat 'docker build -t Saad-Elbahi/microservices-jenkins .'
-                                bat 'docker run --name attendance-service -d -p 8081:8081 Saad-Elbahi/microservices-jenkins'
+                                bat 'docker build -t saad-elbahi/microservices-jenkins .'
+                                bat 'docker run --name attendance-service -d -p 8081:8081 saad-elbahi/microservices-jenkins'
                             }
                         }
                     }
@@ -39,8 +39,8 @@ pipeline {
                     steps {
                         script {
                             dir('RegistrationService') {
-                                bat 'docker build -t Saad-Elbahi/microservices-jenkins .'
-                                bat 'docker run --name registration-service -d -p 8082:8082 Saad-Elbahi/microservices-jenkins'
+                                bat 'docker build -t saad-elbahi/microservices-jenkins .'
+                                bat 'docker run --name registration-service -d -p 8082:8082 saad-elbahi/microservices-jenkins'
                             }
                         }
                     }
@@ -50,8 +50,8 @@ pipeline {
                         script {
                             dir('EmployeeService') {
 
-                                bat 'docker build -t Saad-Elbahi/microservices-jenkins .'
-                                bat 'docker run --name employee-service -d -p 8083:8083 Saad-Elbahi/microservices-jenkins'
+                                bat 'docker build -t saad-elbahi/microservices-jenkins .'
+                                bat 'docker run --name employee-service -d -p 8083:8083 saad-elbahi/microservices-jenkins'
                             }
                         }
                     }
