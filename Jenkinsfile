@@ -1,43 +1,37 @@
 pipeline {
     agent any
-
-    environment {
-        DOCKER_IMAGE_TAG = 'saad-elbahi/microservices-jenkins'
-    }
-
-    tools {
-        // Install Docker Compose
-        dockerCompose "${DOCKER_COMPOSE_VERSION}", installationName: 'default'
-        // Install Maven
-        maven 'maven'
-    }
-
     stages {
-        stage('Build') {
+        stage("verify tooling") {
             steps {
-                script {
-                    // Build your services using Docker Compose
-                    sh "docker-compose -f docker-compose.yml build"
-                }
+                bat '''
+                    docker version
+                    docker info
+                    docker-compose version
+                    curl --version
+                '''
             }
         }
-
-        stage('Deploy') {
+        stage('Prune Docker data') {
             steps {
-                script {
-                    // Deploy your services using Docker Compose
-                    sh "docker-compose -f docker-compose.yml up -d"
-                }
+                bat 'docker system prune -a --volumes -f'
+            }
+        }
+        stage('Build Docker images') {
+            steps {
+                bat 'docker-compose build --no-cache --pull --parallel'
+            }
+        }
+        stage('Start containers') {
+            steps {
+                bat 'docker-compose up -d --no-color --wait'
+                bat 'docker-compose ps'
             }
         }
     }
-
     post {
         always {
-            // Clean up (optional)
-            script {
-                sh "docker-compose -f docker-compose.yml down"
-            }
+            bat 'docker-compose down --remove-orphans -v'
+            bat 'docker-compose ps'
         }
     }
 }
