@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE_TAG = "saad-elbahi/microservices-jenkins"
+    }
+
     tools {
         maven 'maven'
     }
@@ -10,9 +14,9 @@ pipeline {
             steps {
                 script {
                     dir('EurekaServer') {
-                        bat 'mvn clean install'
-                        bat 'docker build -t saad-elbahi/microservices-jenkins.'
-                        bat 'docker run --name EurekaServer -d -p 8761:8761 saad-elbahi/microservices-jenkins'
+                        sh 'mvn clean install'
+                        sh "docker build -t $DOCKER_IMAGE_TAG/eurekaserver ."
+                        sh 'docker run --name EurekaServer -d -p 8761:8761 $DOCKER_IMAGE_TAG/eurekaserver'
                     }
                 }
             }
@@ -22,9 +26,9 @@ pipeline {
             steps {
                 script {
                     dir('APIGateway') {
-                        bat 'mvn clean install'
-                        bat 'docker build -t saad-elbahi/microservices-jenkins .'
-                        bat 'docker run --name APIGateway -d -p 8080:8080 saad-elbahi/microservices-jenkins'
+                        sh 'mvn clean install'
+                        sh "docker build -t $DOCKER_IMAGE_TAG/apigateway ."
+                        sh 'docker run --name APIGateway -d -p 8765:8765 $DOCKER_IMAGE_TAG/apigateway'
                     }
                 }
             }
@@ -34,9 +38,9 @@ pipeline {
             steps {
                 script {
                     dir('AttendanceService') {
-                        bat 'mvn clean install'
-                        bat 'docker build -t saad-elbahi/microservices-jenkins .'
-                        bat 'docker run --name AttendanceService -d -p 8081:8081 saad-elbahi/microservices-jenkins'
+                        sh 'mvn clean install'
+                        sh "docker build -t $DOCKER_IMAGE_TAG/attendanceservice ."
+                        sh 'docker run --name AttendanceService -d -p 8081:8081 $DOCKER_IMAGE_TAG/attendanceservice'
                     }
                 }
             }
@@ -46,9 +50,9 @@ pipeline {
             steps {
                 script {
                     dir('RegistrationService') {
-                        bat 'mvn clean install'
-                        bat 'docker build -t saad-elbahi/microservices-jenkins .'
-                        bat 'docker run --name RegistrationService -d -p 8082:8082 saad-elbahi/microservices-jenkins'
+                        sh 'mvn clean install'
+                        sh "docker build -t $DOCKER_IMAGE_TAG/registrationservice ."
+                        sh 'docker run --name RegistrationService -d -p 8082:8082 $DOCKER_IMAGE_TAG/registrationservice'
                     }
                 }
             }
@@ -58,9 +62,9 @@ pipeline {
             steps {
                 script {
                     dir('EmployeeService') {
-                        bat 'mvn clean install'
-                        bat 'docker build -t saad-elbahi/microservices-jenkins .'
-                        bat 'docker run --name EmployeeService -d -p 8083:8083 saad-elbahi/microservices-jenkins'
+                        sh 'mvn clean install'
+                        sh "docker build -t $DOCKER_IMAGE_TAG/employeeservice ."
+                        sh 'docker run --name EmployeeService -d -p 8083:8083 $DOCKER_IMAGE_TAG/employeeservice'
                     }
                 }
             }
